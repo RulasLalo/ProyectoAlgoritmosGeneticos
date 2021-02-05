@@ -1,5 +1,7 @@
 from SinRumbo import DestruyeNave
-#import SinRumbo
+from MideVida import Mide_Vida
+import SinRumbo
+
 class Automata:
 
     def __init__(self):
@@ -17,11 +19,45 @@ class Automata:
                ('q6',2):'q8',
                ('q8',1):'q9',
                ('q9',1):'q10'}
-    
 
-    def salirPlaneta(self):
+    def escogerNave(self):
+        nave=Mide_Vida()
+        vida=nave.devolverVida()
+        #vida=nave.devolverVida()
+        if vida==1:
+            print("************************************")
+            print(f"Tu nave espacial tiene {vida} vida.")
+            print("************************************")
+        else:
+            print("*************************************")
+            print(f"Tu nave espacial tiene {vida} vidas.")
+            print("*************************************")
+        self.salirPlaneta(vida)
+
+    def ajustarVida(self, vida):
+        vida=vida-1
+        #print("la cantidad de vidas es ",vida)
+        if vida>1:
+            print("*****************************")
+            print(f"Aún te quedan {vida} vidas.")
+            print("*****************************")
+            return vida
+        if vida==1:
+            print("***********************************************")
+            print(f"Con cuidado!!! solamente te queda {vida} vida.")
+            print("***********************************************")
+            return vida
+        if vida==0:
+            print("**************")
+            print("HAZ MUERTO!!!")
+            print("**************")
+            #self.verRecorrido(self.recorridoFinal)
+            return 0
+    
+    def salirPlaneta(self, vida):
         opc=0
         print()
+        print("------------------------------------------------------------------------------------------")
         opc=int(input("Te encuentras en el inicio. Presiona 1 para enceder nave y salir del planeta: "))
         self.recorridoFinal.append(opc)        
         try:
@@ -30,14 +66,15 @@ class Automata:
                 #print(transicion)
                 #self.recorridoFinal.append(opc)
                 #self.fijarRumbo(transicion)
-                self.fijarRumbo(self.recorridoFinal)
+                self.fijarRumbo(self.recorridoFinal, vida)
         except ValueError:
             print("Cuidado, debes ingresar un número entero.")
             
-    def fijarRumbo(self,recorridoFinal):
+    def fijarRumbo(self,recorridoFinal, vida):
         recorrido=recorridoFinal
         #print(recorrido)
         print()
+        print("-------------------------------------------------------------------------------")
         print("Ahora están fuera del planeta tierra, debes escoger un rumbo:")
         print("1)Ir a Marte")
         print("2)Ir a Kepler-22B")
@@ -54,18 +91,20 @@ class Automata:
             try:
                 if(opc==2):
                     #transicion=self.delta[(estado,opc)]
-                    self.cruzarCinturon()
+                    self.cruzarCinturon(vida)
                     break
                 if(opc==1 or opc==3 or opc==4 or opc==5):
-                    obj.destruirNave(self.recorridoFinal)
+                    obj.destruirNave(self.recorridoFinal, vida)
                     #transicion=self.delta[(estado,opc)]
+                    
                     break
             except ValueError:
                 print("Cuidado, debes ingresar un número entero.")
             break
 
-    def cruzarCinturon(self):
+    def cruzarCinturon(self, vida):
         print()
+        print("-------------------------------------------------------------------------------")
         print("Estás a punto de cruzar el cinturón de asteroides entre Marte y Júpiter: ")
         print("Selecciona una opción:")
         print("1)Regresar y tomar otra ruta.")
@@ -77,25 +116,26 @@ class Automata:
             self.recorridoFinal.append(opc)
             try:
                 if(opc==1):
-                    self.fijarRumbo(self.recorridoFinal)
+                    self.fijarRumbo(self.recorridoFinal, vida)
                     break
                 if(opc==2):
                     print("Has dedicido abortar la misión.")
-                    self.verRecorrido(self.recorridoFinal)
+                    self.verRecorrido(self.recorridoFinal, vida)
                     break
                 if(opc==3):
                     #transicion=self.delta[(estado,opc)]
                     #self.irAJupiter(transicion)
-                    self.irAJupiter()
+                    self.irAJupiter(vida)
                     break
             except ValueError:
                 print("Cuidado, debes ingresar un número entero.")
             #print(self.recorridoFinal)    
             break
     
-    def irAJupiter(self):
+    def irAJupiter(self, vida):
         opc=0
         print()
+        print("-----------------------------------------------------------------------------------------")
         print("Muy bien, ahora estás cerca de Júpiter, para seguir adelante tienes 2 caminos posibles: ")
         print("1) Usar la gravedad de Júpiter para impulsarse y ahorrar combustible.")
         print("2) Seguir adelante y descubrir que pasa.")
@@ -105,7 +145,7 @@ class Automata:
             self.recorridoFinal.append(opc)
             try:
                 if(opc==1):
-                    self.salirDelSistemaSolar()
+                    self.salirDelSistemaSolar(vida)
                     #transicion=self.delta[(estado,opc)]
                     #self.recorridoFinal.append(opc)
                     break
@@ -113,16 +153,17 @@ class Automata:
                     if(opc==2):
                         #transicion=self.delta[(estado,opc)]
                         #print("final")
-                        self.descubrirVida()
+                        self.descubrirVida(vida)
                         break
                         #self.recorridoFinal.append(opc)     
             except ValueError:
                 pass
             #print(self.recorridoFinal)
             break
-    def salirDelSistemaSolar(self):
+    def salirDelSistemaSolar(self, vida):
         opc=0
         print()
+        print("-------------------------------------------------------------------------------------------")
         print("Muy bien te estás acercando a la nube de Ort, eso signfica que estás saliendo del sistema "
         "solar y que vas muy bien.")
         print()
@@ -132,7 +173,7 @@ class Automata:
            self.recorridoFinal.append(opc)
            try:
                if(opc==1):
-                   obj.salirHoyoNegro(self.recorridoFinal)
+                   obj.salirHoyoNegro(self.recorridoFinal, vida)
                    break
                else:
                    print("Favor de ingresar la opción correcta.")
@@ -143,11 +184,11 @@ class Automata:
            break
 
     
-    def descubrirVida(self):
+    def descubrirVida(self, vida):
         opc=0
-
+        print("---------------------------------------------------------------------------------------------")
         print("Te has encontrado con un satélite que la AEM mandó hace 10 años. Ya no puede enviar" 
-                "información, pero aún la sigue recibiendo. El satélite tiene información en la que"
+                "información, pero aún la sigue recibiendo. El satélite tiene información en la que "
                 "Titán, una de las lunas de Júpiter alberga vida. Tú y los ingeniero Airam y Alessandra"
                 "están ante un descubrimientos sin precendentes. Han descubierto vida en el Sistema Solar.")
         print()
@@ -158,7 +199,7 @@ class Automata:
             self.recorridoFinal.append(opc)
             try:
                 if(opc==1):
-                    self.leyendoInformacion()
+                    self.leyendoInformacion(vida)
                     break
                 else:
                     print("Favor de ingresar la opción correcta.")
@@ -168,9 +209,10 @@ class Automata:
                 pass
             break
     
-    def leyendoInformacion(self):
+    def leyendoInformacion(self, vida):
+        print("------------------------------------------------------------------------------------------")
         opc=0
-        print("LA información del satélite indica que la vida en Titán si existe, desde microorganismos,"
+        print("La información del satélite indica que la vida en Titán si existe, desde microorganismos,"
         "hasta diferentes tipos de especies desconocidas que se encuentran en las profundidades del los"
         "océanos congelados de dicho satélite natural. Al parece el rumbo de tu travesía tomará un camino"
         "diferente.")
@@ -182,7 +224,7 @@ class Automata:
             self.recorridoFinal.append(opc)
             try:
                 if(opc==1):
-                    self.bajarATitan(self.recorridoFinal)
+                    self.bajarATitan(self.recorridoFinal, vida)
                     break
                 else:
                     if(opc==2):
@@ -198,9 +240,10 @@ class Automata:
                 pass
             break
     
-    def bajarATitan(self, recorridoFinal):
-        print("De ahora en adelante la misión se dedicará a la investigación en Titán. 3 naves tripuladas"
-        "van a hacia ustedes en este momento con la teconología necesaria para plantar una base ahí. En 2 "
+    def bajarATitan(self, recorridoFinal, vida):
+        print("---------------------------------------------------------------------------------------------")
+        print("De ahora en adelante la misión se dedicará a la investigación en Titán. 3 naves tripuladas "
+        "van a hacia ustedes en este momento con la tecnología necesaria para plantar una base ahí. En 2 "
         "meses, una tripulación mas grande partirá hacia Kepler-22B." )
         self.verRecorrido(self.recorridoFinal)
     
@@ -212,8 +255,10 @@ class Automata:
         for i in w:
             estado=self.transicion(estado,i)
         if estado in (self.F):
+            print()
             print(w," La nave espacial siguió la ruta adecuada.")
         else:
+            print()
             print(w," La nave espacial tuvo problemas de ubicación.")
             
     def transicion(self,estado, sigma):
