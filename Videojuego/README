@@ -19,4 +19,4 @@ Every node of the automatha corresponds to each step of the game.
 
 The image of the automatha there is in ProyectoAlgoritmosGeneticos/Videojuego/autómata.png
 
-NOTE: The transition of the node q4 to q2 is given by 1.
+NOTE: The transition of the node q4 to q2 is given by 1. And well, it still has many bugs, but I will repair them and I will finish this project.
