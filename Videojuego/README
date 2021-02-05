@@ -1,0 +1,22 @@
+This is a small videogame which was made applying genetic algorithms and automata theory.
+
+If you want to run this project, the class Principal.py is the main.
+
+At First you'll see a menu where you must choose a type of spaceship, every option correponds to a fitness function:
+1.- f(x)=x^2
+2.- f(x)=ABS |(x-5)/(2+sen(x)|
+3.- f(x)=sen(x)
+
+Once chosen you must choose what kind of spaceship do you want. In this case, I classified them as follows:
+
+1.- The maximun value will give you three lives.
+2.- If the value is less than the maximun value and greater equal than the average value then you will have two lifes.
+3.- If the value is leen then the average value you will have one life.
+
+Then you will start the adventure...
+
+Every node of the automatha corresponds to each step of the game.
+
+The image of the automatha there is in ProyectoAlgoritmosGeneticos/Videojuego/autómata.png
+
+NOTE: The transition of the node q4 to q2 is given by 1.
