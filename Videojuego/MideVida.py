@@ -183,7 +183,7 @@ class Mide_Vida:
         mayor=max(individuo)
         menor=min(individuo)
         media=stats.mean(individuo)
-        #print(mayor," ",menor, " ", media)
+        print(mayor," ",menor, " ", media)
         self.vida=0
         if nave == mayor:
             self.vida=3
